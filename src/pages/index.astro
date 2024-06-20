@@ -1,12 +1,70 @@
 ---
-import GazeEventsComponent from '../components/GazeEventsComponent.jsx';
+import { useState, useEffect } from 'react';
+
+// Definir la interfaz para los eventos de seguimiento ocular
+interface GazeEvent {
+    docX: number;
+    docY: number;
+    GazeX: number;
+    GazeY: number;
+    HeadX: number;
+    HeadY: number;
+    HeadZ: number;
+    HeadYaw: number;
+    HeadPitch: number;
+    HeadRoll: number;
+    state: number;
+}
+
+// Obtener el parámetro gazeevents de la URL
+const gazeEventsParam = new URLSearchParams(window.location.search).get('gazeevents');
+
+// Verificar si el parámetro es nulo antes de decodificar y analizar
+const gazeevents: GazeEvent[] = gazeEventsParam ? JSON.parse(decodeURIComponent(gazeEventsParam)) : [];
 ---
 
-<html>
-  <head>
-    <title>Gaze Events Viewer</title>
-  </head>
-  <body>
-    <GazeEventsComponent />
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Tracking Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .gaze-event {
+            margin-bottom: 10px;
+        }
+        .gaze-event-title {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Eye Tracking Data</h1>
+    <div id="gaze-events">
+        {gazeevents.length > 0 ? (
+            gazeevents.map((event: GazeEvent) => (
+                <div class="gaze-event">
+                    <div class="gaze-event-title">Event:</div>
+                    <div>docX: {event.docX}</div>
+                    <div>docY: {event.docY}</div>
+                    <div>GazeX: {event.GazeX}</div>
+                    <div>GazeY: {event.GazeY}</div>
+                    <div>HeadX: {event.HeadX}</div>
+                    <div>HeadY: {event.HeadY}</div>
+                    <div>HeadZ: {event.HeadZ}</div>
+                    <div>HeadYaw: {event.HeadYaw}</div>
+                    <div>HeadPitch: {event.HeadPitch}</div>
+                    <div>HeadRoll: {event.HeadRoll}</div>
+                    <div>State: {event.state}</div>
+                </div>
+            ))
+        ) : (
+            <div>No gaze events available.</div>
+        )}
+    </div>
+</body>
 </html>
