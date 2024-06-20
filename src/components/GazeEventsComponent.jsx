@@ -9,9 +9,14 @@ const GazeEventsComponent = () => {
     const gazeevents = queryParams.get('gazeevents');
 
     if (gazeevents) {
+      alert('Datos recibidos en el componente');
+      
       // Decodificar y analizar el JSON
       const decodedData = decodeURIComponent(gazeevents);
       const parsedData = JSON.parse(decodedData);
+
+      // Mostrar el contenido del array
+      alert(`Contenido del array: ${JSON.stringify(parsedData)}`);
 
       // Establecer los datos en el estado
       setGazeEvents(parsedData);

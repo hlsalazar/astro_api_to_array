@@ -1,5 +1,11 @@
 ---
 import GazeEventsComponent from '../components/GazeEventsComponent.jsx';
+
+const queryParams = new URLSearchParams(window.location.search);
+const gazeevents = queryParams.get('gazeevents');
+if (gazeevents) {
+  alert('Datos recibidos en la página .astro');
+}
 ---
 
 <html>
