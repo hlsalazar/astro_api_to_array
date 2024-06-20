@@ -4,24 +4,31 @@ const GazeEventsComponent = () => {
   const [gazeEvents, setGazeEvents] = useState([]);
 
   useEffect(() => {
-    // Obtener los parámetros de la URL
-    const queryParams = new URLSearchParams(window.location.search);
-    const gazeevents = queryParams.get('gazeevents');
+    // Este código solo se ejecutará en el cliente
+    if (typeof window !== 'undefined') {
+      // Obtener los parámetros de la URL
+      const queryParams = new URLSearchParams(window.location.search);
+      const gazeevents = queryParams.get('gazeevents');
 
-    if (gazeevents) {
-      alert('Datos recibidos en el componente');
-      
-      // Decodificar y analizar el JSON
-      const decodedData = decodeURIComponent(gazeevents);
-      const parsedData = JSON.parse(decodedData);
+      if (gazeevents) {
+        alert('Datos recibidos en el componente');
 
-      // Mostrar el contenido del array
-      alert(`Contenido del array: ${JSON.stringify(parsedData)}`);
+        // Decodificar y analizar el JSON
+        const decodedData = decodeURIComponent(gazeevents);
+        const parsedData = JSON.parse(decodedData);
 
-      // Establecer los datos en el estado
-      setGazeEvents(parsedData);
+        // Mostrar el contenido del array
+        alert(`Contenido del array: ${JSON.stringify(parsedData)}`);
+
+        // Establecer los datos en el estado
+        setGazeEvents(parsedData);
+      }
     }
   }, []);
+
+  const showAlert = () => {
+    alert(`Contenido del array: ${JSON.stringify(gazeEvents)}`);
+  };
 
   return (
     <div>
@@ -37,6 +44,7 @@ const GazeEventsComponent = () => {
       ) : (
         <p>No data available.</p>
       )}
+      <button onClick={showAlert}>Mostrar contenido del array</button>
     </div>
   );
 };
