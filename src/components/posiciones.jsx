@@ -1,20 +1,7 @@
-// src/components/GazeEvents.jsx
-import React, { useState, useEffect } from 'react';
+// src/components/Posiciones.jsx
+import React from 'react';
 
-const GazeEvents = () => {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    // Function to get the data from localStorage
-    function getArrayFromLocalStorage() {
-      const data = localStorage.getItem('gazeevents');
-      return data ? JSON.parse(data) : [];
-    }
-
-    const arrayFromLocalStorage = getArrayFromLocalStorage();
-    setItems(arrayFromLocalStorage);
-  }, []);
-
+const Posiciones = ({ items }) => {
   return (
     <table>
       <thead>
@@ -37,4 +24,4 @@ const GazeEvents = () => {
   );
 };
 
-export default GazeEvents;
+export default Posiciones;
