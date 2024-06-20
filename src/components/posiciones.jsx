@@ -1,7 +1,21 @@
 // src/components/Posiciones.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Posiciones = ({ items }) => {
+const Posiciones = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    // Function to parse the query parameter
+    function getArrayFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get('gazeevents');
+      return data ? JSON.parse(decodeURIComponent(data)) : [];
+    }
+
+    const arrayFromQuery = getArrayFromQuery();
+    setItems(arrayFromQuery);
+  }, []);
+
   return (
     <table>
       <thead>

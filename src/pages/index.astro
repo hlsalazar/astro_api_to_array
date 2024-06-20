@@ -2,26 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import Posiciones from '../components/posiciones.jsx'
-import { useState, useEffect } from 'react';
 
-const [items, setItems] = useState([]);
-
-useEffect(() => {
-  // Function to parse the query parameter
-  function getArrayFromQuery() {
-    const params = new URLSearchParams(window.location.search);
-    const data = params.get('gazeevents');
-    return data ? JSON.parse(decodeURIComponent(data)) : [];
-  }
-
-  const arrayFromQuery = getArrayFromQuery();
-  setItems(arrayFromQuery);
-}, []);
 ---
 <Layout title="Welcome to Astro.">
 	<main>
 
-    <Posiciones items={items} />
+    <Posiciones />
 
 
 		<svg
