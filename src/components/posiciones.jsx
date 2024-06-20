@@ -16,11 +16,24 @@ const GazeEvents = () => {
   }, []);
 
   return (
-    <ul>
-      {items.map((item, index) => (
-        <li key={index}>{JSON.stringify(item)}</li>
-      ))}
-    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>X Coordinate</th>
+          <th>Y Coordinate</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item, index) => (
+          <tr key={index}>
+            <td>{index}</td>
+            <td>{item.docX}</td>
+            <td>{item.docY}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
