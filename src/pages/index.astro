@@ -1,70 +1,47 @@
 ---
-import { useState, useEffect } from 'react';
+// src/pages/index.astro
+import { useEffect, useState } from 'react';
 
-// Definir la interfaz para los eventos de seguimiento ocular
+// Define the type for gaze events
 interface GazeEvent {
-    docX: number;
-    docY: number;
-    GazeX: number;
-    GazeY: number;
-    HeadX: number;
-    HeadY: number;
-    HeadZ: number;
-    HeadYaw: number;
-    HeadPitch: number;
-    HeadRoll: number;
-    state: number;
+  docX: number;
+  docY: number;
+  duration: number;
+  state: number;
+  time: number;
 }
 
-// Obtener el parámetro gazeevents de la URL
-const gazeEventsParam = new URLSearchParams(window.location.search).get('gazeevents');
+// Parse gaze events from query parameters
+let gazeEvents: GazeEvent[] = [];
 
-// Verificar si el parámetro es nulo antes de decodificar y analizar
-const gazeevents: GazeEvent[] = gazeEventsParam ? JSON.parse(decodeURIComponent(gazeEventsParam)) : [];
+export function getStaticProps({ params, query }) {
+  // Parse gazeevents from query parameters
+  if (query.gazeevents) {
+    gazeEvents = JSON.parse(decodeURIComponent(query.gazeevents));
+  }
+  return { props: { gazeEvents } };
+}
+
+const [events, setEvents] = useState<GazeEvent[]>([]);
+
+useEffect(() => {
+  // Initialize events with gazeEvents prop
+  setEvents(gazeEvents);
+}, []);
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eye Tracking Data</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        .gaze-event {
-            margin-bottom: 10px;
-        }
-        .gaze-event-title {
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <h1>Eye Tracking Data</h1>
-    <div id="gaze-events">
-        {gazeevents.length > 0 ? (
-            gazeevents.map((event: GazeEvent) => (
-                <div class="gaze-event">
-                    <div class="gaze-event-title">Event:</div>
-                    <div>docX: {event.docX}</div>
-                    <div>docY: {event.docY}</div>
-                    <div>GazeX: {event.GazeX}</div>
-                    <div>GazeY: {event.GazeY}</div>
-                    <div>HeadX: {event.HeadX}</div>
-                    <div>HeadY: {event.HeadY}</div>
-                    <div>HeadZ: {event.HeadZ}</div>
-                    <div>HeadYaw: {event.HeadYaw}</div>
-                    <div>HeadPitch: {event.HeadPitch}</div>
-                    <div>HeadRoll: {event.HeadRoll}</div>
-                    <div>State: {event.state}</div>
-                </div>
-            ))
-        ) : (
-            <div>No gaze events available.</div>
-        )}
-    </div>
-</body>
+<html>
+  <head>
+    <title>Revisión de Seguimiento Ocular</title>
+  </head>
+  <body>
+    <h1>Revisión de Seguimiento Ocular</h1>
+    <ul>
+      {events.map((event, index) => (
+        <li key={index}>
+          X: {event.docX}, Y: {event.docY}, Duration: {event.duration}, State: {event.state}, Time: {event.time}
+        </li>
+      ))}
+    </ul>
+  </body>
 </html>
