@@ -10,7 +10,9 @@ export async function post({ request }) {
     return new Response(JSON.stringify({ id: id }), {
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app' // Permitir solo solicitudes desde este origen
+            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app', // Tu origen permitido
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
         }
     });
 }
@@ -22,7 +24,7 @@ export function getStore() {
 export async function options() {
     return new Response(null, {
         headers: {
-            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app', // Permitir solo solicitudes desde este origen
+            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app', // Tu origen permitido
             'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
             'Access-Control-Allow-Headers': 'Content-Type'
         }
