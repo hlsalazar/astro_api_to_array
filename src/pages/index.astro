@@ -1,7 +1,7 @@
 ---
 import { useEffect, useState } from 'react';
 
-// Define the interface
+// Define la interfaz
 interface GazeEvent {
   docX: number;
   docY: number;
@@ -27,7 +27,7 @@ if (typeof window !== 'undefined') {
     <ul>
       {gazeevents.map((event: GazeEvent, index: number) => (
         <li key={index.toString()}>
-          X: {event.docX.toString()}, Y: {event.docY.toString()}, Estado: {event.state.toString()}
+          X: {event.docX}, Y: {event.docY}, Estado: {event.state}
         </li>
       ))}
     </ul>
