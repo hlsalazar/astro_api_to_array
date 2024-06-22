@@ -8,10 +8,23 @@ export async function post({ request }) {
     dataStore.set(id, body.sum);
 
     return new Response(JSON.stringify({ id: id }), {
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app' // Permitir solo solicitudes desde este origen
+        }
     });
 }
 
 export function getStore() {
     return dataStore;
+}
+
+export async function options() {
+    return new Response(null, {
+        headers: {
+            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app', // Permitir solo solicitudes desde este origen
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    });
 }
