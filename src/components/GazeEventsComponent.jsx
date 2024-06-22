@@ -1,52 +1,38 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const GazeEventsComponent = () => {
-  const [gazeEvents, setGazeEvents] = useState([]);
+const decodeGazeevents = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const gazeevents = urlParams.get('gazeevents');
+  if (gazeevents) {
+    try {
+      const decodedData = JSON.parse(decodeURIComponent(gazeevents));
+      return decodedData;
+    } catch (error) {
+      console.error('Error decoding gazeevents:', error);
+      return null;
+    }
+  }
+  return null;
+};
+
+const GazeeventsComponent = () => {
+  const [gazeevents, setGazeevents] = useState(null);
 
   useEffect(() => {
-    // Este código solo se ejecutará en el cliente
-    if (typeof window !== 'undefined') {
-      // Obtener los parámetros de la URL
-      const queryParams = new URLSearchParams(window.location.search);
-      const gazeevents = queryParams.get('gazeevents');
-
-      if (gazeevents) {
-        alert('Datos recibidos en el componente');
-
-        // Decodificar y analizar el JSON
-        const decodedData = decodeURIComponent(gazeevents);
-        const parsedData = JSON.parse(decodedData);
-
-        // Mostrar el contenido del array
-        alert(`Contenido del array: ${JSON.stringify(parsedData)}`);
-
-        // Establecer los datos en el estado
-        setGazeEvents(parsedData);
-      }
-    }
+    const data = decodeGazeevents();
+    setGazeevents(data);
   }, []);
 
-  const showAlert = () => {
-    alert(`Contenido del array: ${JSON.stringify(gazeEvents)}`);
-  };
+  if (!gazeevents) {
+    return <div>No gazeevents data found.</div>;
+  }
 
   return (
     <div>
-      <h1>Gaze Events</h1>
-      {gazeEvents.length > 0 ? (
-        <ul>
-          {gazeEvents.map((event, index) => (
-            <li key={index}>
-              {JSON.stringify(event)}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No data available.</p>
-      )}
-      <button onClick={showAlert}>Mostrar contenido del array</button>
+      <h1>Gazeevents Data</h1>
+      <pre>{JSON.stringify(gazeevents, null, 2)}</pre>
     </div>
   );
 };
 
-export default GazeEventsComponent;
+export default GazeeventsComponent;
