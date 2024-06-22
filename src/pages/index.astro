@@ -26,8 +26,8 @@ if (typeof window !== 'undefined') {
     <h1>Revisión de Gazeevents</h1>
     <ul>
       {gazeevents.map((event: GazeEvent, index: number) => (
-        <li key={index}>
-          X: {event.docX}, Y: {event.docY}, Estado: {event.state}
+        <li key={index.toString()}>
+          X: {event.docX.toString()}, Y: {event.docY.toString()}, Estado: {event.state.toString()}
         </li>
       ))}
     </ul>
