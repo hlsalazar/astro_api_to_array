@@ -1,18 +1,20 @@
 ---
-import GazeeventsComponents from '../components/GazeEventsComponent.jsx';
+export const prerender = true;
+
+const { search } = Astro.url;
+const params = new URLSearchParams(search);
+const resultado = params.get('resultado');
 ---
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicación en Astro</title>
+    <title>Resultado</title>
 </head>
 <body>
-
-  <GazeeventsComponents />
+    <h1>Resultado de la Suma</h1>
+    <p>{resultado !== null ? `El resultado es: ${resultado}` : 'No se recibió ningún resultado.'}</p>
 </body>
 </html>
