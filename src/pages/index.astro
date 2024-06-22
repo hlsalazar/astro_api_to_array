@@ -1,17 +1,8 @@
 ---
-import { useState, useEffect } from 'react';
-
-const [resultado, setResultado] = useState(null);
-
-useEffect(() => {
-    async function obtenerResultado() {
-        const response = await fetch('/api/obtener-resultado');
-        const data = await response.json();
-        setResultado(data.resultado);
-    }
-    obtenerResultado();
-}, []);
+import GazeeventsComponents from '../components/GazeEventsComponent.jsx';
 ---
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +12,7 @@ useEffect(() => {
     <title>Aplicación en Astro</title>
 </head>
 <body>
-    <h1>Resultado de la Suma</h1>
-    <p>{resultado !== null ? `El resultado es: ${resultado}` : 'Esperando resultado...'}</p>
+
+  <GazeeventsComponents />
 </body>
 </html>
