@@ -1,8 +1,23 @@
 ---
-const response = await fetch('https://tu-api.vercel.app/api/endpoint');
-const result = await response.json();
-const points = result.data ? JSON.parse(decodeURIComponent(result.data)) : [];
-
+let points = [];
+try {
+  const response = await fetch('https://tu-api.vercel.app/api/endpoint');
+  
+  if (!response.ok) {
+    console.error(`HTTP error! status: ${response.status}`);
+  } else {
+    const result = await response.text(); // Cambia a .text() para verificar el contenido primero
+    try {
+      const jsonResult = JSON.parse(result); // Intenta parsear el JSON
+      points = jsonResult.data ? JSON.parse(decodeURIComponent(jsonResult.data)) : [];
+    } catch (e) {
+      console.error('Error parsing JSON:', e);
+      console.error('Response text:', result);
+    }
+  }
+} catch (error) {
+  console.error('Fetch error:', error);
+}
 console.log(points);
 ---
 
