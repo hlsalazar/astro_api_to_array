@@ -1,9 +1,10 @@
 ---
-export const prerender = true;
+import { getStore } from '../api/store-sum';
 
-const { search } = Astro.url;
-const params = new URLSearchParams(search);
-const resultado = params.get('resultado');
+const params = Astro.url.searchParams;
+const id = params.get('id');
+const dataStore = getStore();
+const sum = dataStore.get(id);
 ---
 
 <!DOCTYPE html>
@@ -11,10 +12,9 @@ const resultado = params.get('resultado');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado</title>
+    <title>Result Page</title>
 </head>
 <body>
-    <h1>Resultado de la Suma</h1>
-    <p>{resultado !== null ? `El resultado es: ${resultado}` : 'No se recibió ningún resultado.'}</p>
+    <h1>Sum Result: {sum}</h1>
 </body>
 </html>
