@@ -1,19 +1,66 @@
 ---
-// src/pages/index.astro
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const request = new XMLHttpRequest();
-const url = "https://api-seguim-ocular.vercel.app/prueba.html"; 
+// Estado y efectos no son nativos en Astro, esto es solo un ejemplo de integración de componentes de React.
+const [dataArray, setDataArray] = useState([]);
 
+useEffect(() => {
+  const request = new XMLHttpRequest();
+  const url = "https://api-seguim-ocular.vercel.app/prueba.html"; 
 
-request.open("GET",url);
-request.responseType = "json";
-request.onload = showResult;
-request.send();
+  request.open("GET", url);
+  request.responseType = "json";
+  request.onload = () => {
+    if (request.status === 200) {
+      setDataArray(request.response);
+    } else {
+      console.error('Error fetching data', request.statusText);
+    }
+  };
+  request.onerror = () => {
+    console.error('Request failed');
+  };
+  request.send();
+}, []);
+---
 
-function showResult(){
-  console.dir(request.response);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Astro App</title>
+</head>
+<body>
+  <h1>Data Array</h1>
+  <ul id="data-list">
+    <!-- La lista se llenará con datos usando JavaScript -->
+  </ul>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const request = new XMLHttpRequest();
+      const url = "https://api-seguim-ocular.vercel.app/prueba.html"; 
 
-
-
+      request.open("GET", url);
+      request.responseType = "json";
+      request.onload = () => {
+        if (request.status === 200) {
+          const dataArray = request.response;
+          const dataList = document.getElementById('data-list');
+          dataArray.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = item.value;
+            dataList.appendChild(listItem);
+          });
+        } else {
+          console.error('Error fetching data', request.statusText);
+        }
+      };
+      request.onerror = () => {
+        console.error('Request failed');
+      };
+      request.send();
+    });
+  </script>
+</body>
+</html>
