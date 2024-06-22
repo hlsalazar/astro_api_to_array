@@ -2,46 +2,18 @@
 // src/pages/index.astro
 import { useEffect, useState } from 'react';
 
-// Define the type for gaze events
-interface GazeEvent {
-  docX: number;
-  docY: number;
-  duration: number;
-  state: number;
-  time: number;
+const request = new XMLHttpRequest();
+const url = "https://api-seguim-ocular.vercel.app/prueba.html"; 
+
+
+request.open("GET",url);
+request.responseType = "json";
+request.onload = showResult;
+request.send();
+
+function showResult(){
+  console.dir(request.response);
 }
 
-// Parse gaze events from query parameters
-let gazeEvents: GazeEvent[] = [];
 
-export function getStaticProps({ params, query }) {
-  // Parse gazeevents from query parameters
-  if (query.gazeevents) {
-    gazeEvents = JSON.parse(decodeURIComponent(query.gazeevents));
-  }
-  return { props: { gazeEvents } };
-}
 
-const [events, setEvents] = useState<GazeEvent[]>([]);
-
-useEffect(() => {
-  // Initialize events with gazeEvents prop
-  setEvents(gazeEvents);
-}, []);
----
-
-<html>
-  <head>
-    <title>Revisión de Seguimiento Ocular</title>
-  </head>
-  <body>
-    <h1>Revisión de Seguimiento Ocular</h1>
-    <ul>
-      {events.map((event, index) => (
-        <li key={index}>
-          X: {event.docX}, Y: {event.docY}, Duration: {event.duration}, State: {event.state}, Time: {event.time}
-        </li>
-      ))}
-    </ul>
-  </body>
-</html>
