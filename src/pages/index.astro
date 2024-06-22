@@ -1,11 +1,20 @@
 ---
 import { useEffect, useState } from 'react';
 
+// Define the interface
+interface GazeEvent {
+  docX: number;
+  docY: number;
+  state: number;
+}
+
 // Esta función se ejecutará en el lado del cliente
+let gazeevents: GazeEvent[] = [];
+
 if (typeof window !== 'undefined') {
   const searchParams = new URLSearchParams(window.location.search);
   const gazeeventsData = searchParams.get('gazeevents');
-  var gazeevents = gazeeventsData ? JSON.parse(decodeURIComponent(gazeeventsData)) : [];
+  gazeevents = gazeeventsData ? JSON.parse(decodeURIComponent(gazeeventsData)) : [];
 }
 ---
 
@@ -16,7 +25,7 @@ if (typeof window !== 'undefined') {
   <body>
     <h1>Revisión de Gazeevents</h1>
     <ul>
-      {gazeevents.map((event, index) => (
+      {gazeevents.map((event: GazeEvent, index: number) => (
         <li key={index}>
           X: {event.docX}, Y: {event.docY}, Estado: {event.state}
         </li>
