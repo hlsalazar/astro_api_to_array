@@ -1,32 +1,27 @@
 ---
-let points = [];
-try {
-  const response = await fetch('https://tu-api.vercel.app/api/endpoint');
-  
-  if (!response.ok) {
-    console.error(`HTTP error! status: ${response.status}`);
-  } else {
-    const result = await response.text(); // Cambia a .text() para verificar el contenido primero
-    try {
-      const jsonResult = JSON.parse(result); // Intenta parsear el JSON
-      points = jsonResult.data ? JSON.parse(decodeURIComponent(jsonResult.data)) : [];
-    } catch (e) {
-      console.error('Error parsing JSON:', e);
-      console.error('Response text:', result);
+import { useState, useEffect } from 'react';
+
+const [resultado, setResultado] = useState(null);
+
+useEffect(() => {
+    async function obtenerResultado() {
+        const response = await fetch('/api/obtener-resultado');
+        const data = await response.json();
+        setResultado(data.resultado);
     }
-  }
-} catch (error) {
-  console.error('Fetch error:', error);
-}
-console.log(points);
+    obtenerResultado();
+}, []);
 ---
 
-<html>
-  <head>
-    <title>Datos de la API en Consola</title>
-  </head>
-  <body>
-    <h1>Datos de la API en Consola</h1>
-    <p>Revisa la consola del navegador para ver los datos obtenidos de la API.</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicación en Astro</title>
+</head>
+<body>
+    <h1>Resultado de la Suma</h1>
+    <p>{resultado !== null ? `El resultado es: ${resultado}` : 'Esperando resultado...'}</p>
+</body>
 </html>
