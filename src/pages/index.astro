@@ -1,5 +1,17 @@
 ---
-import GazeeventsComponent from '../components/GazeEventsComponent.jsx';
+const response = await fetch('https://tu-api.vercel.app/api/endpoint');
+const result = await response.json();
+const points = result.data ? JSON.parse(decodeURIComponent(result.data)) : [];
+
+console.log(points);
 ---
 
-<GazeeventsComponent />
+<html>
+  <head>
+    <title>Datos de la API en Consola</title>
+  </head>
+  <body>
+    <h1>Datos de la API en Consola</h1>
+    <p>Revisa la consola del navegador para ver los datos obtenidos de la API.</p>
+  </body>
+</html>
