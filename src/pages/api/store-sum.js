@@ -1,18 +1,8 @@
-import { v4 as uuidv4 } from 'uuid';
+const { v4: uuidv4 } = require('uuid');
 
 const dataStore = new Map();
 
-export async function post({ request }) {
-    if (request.method === 'OPTIONS') {
-        return new Response(null, {
-            headers: {
-                'Access-Control-Allow-Origin': '*', // Permitir cualquier origen
-                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type'
-            }
-        });
-    }
-
+async function handlePost(request) {
     const body = await request.json();
     const id = uuidv4();
     dataStore.set(id, body.sum);
@@ -25,6 +15,23 @@ export async function post({ request }) {
             'Access-Control-Allow-Headers': 'Content-Type'
         }
     });
+}
+
+async function handleOptions() {
+    return new Response(null, {
+        headers: {
+            'Access-Control-Allow-Origin': '*', // Permitir cualquier origen
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    });
+}
+
+export async function post({ request }) {
+    if (request.method === 'OPTIONS') {
+        return handleOptions();
+    }
+    return handlePost(request);
 }
 
 export function getStore() {
