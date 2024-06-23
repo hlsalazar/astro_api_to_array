@@ -4,28 +4,7 @@ import Perros from '../components/Perros.jsx';
 const { searchParams } = Astro.url;
 const sum = searchParams.get('sum');
 
-const title = "Receta de Tacos de Pollo";
-const ingredients = [
-  "500g de pechuga de pollo",
-  "1 cebolla",
-  "2 dientes de ajo",
-  "1 pimiento rojo",
-  "2 tomates",
-  "Tortillas de maíz",
-  "Sal y pimienta al gusto",
-  "Aceite de oliva"
-];
 
-const steps = [
-  "Cortar el pollo en tiras finas.",
-  "Picar la cebolla, el ajo y el pimiento rojo.",
-  "En una sartén, calentar un poco de aceite de oliva y añadir la cebolla y el ajo.",
-  "Cuando la cebolla esté transparente, añadir el pimiento rojo y cocinar por unos minutos.",
-  "Agregar el pollo y cocinar hasta que esté dorado.",
-  "Añadir los tomates picados, sal y pimienta al gusto, y cocinar por 10 minutos más.",
-  "Calentar las tortillas en otra sartén.",
-  "Servir el pollo sobre las tortillas y disfrutar."
-];
 ---
 
 <!DOCTYPE html>
@@ -33,7 +12,7 @@ const steps = [
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title}</title>
+  <title>{"TEXTO NADA MAS"}</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -74,17 +53,9 @@ const steps = [
 </head>
 <body>
   <div class="container">
-    <h1>{title}</h1>
     <h2>Ingredientes</h2>
-    <ul>
-      {ingredients.map(ingredient => <li>{ingredient}</li>)}
-    </ul>
-    <div class="steps">
-      <h2>Pasos a seguir</h2>
-      <ol>
-        {steps.map(step => <li>{step}</li>)}
-      </ol>
-    </div>
+
+    <p>Resultado de la suma: {sum}</p>
     {sum && <p>Resultado de la suma: {sum}</p>}
   </div>
   <Perros />
