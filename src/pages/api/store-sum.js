@@ -1,39 +1,32 @@
-import express from 'express';
-import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
-
-const app = express();
-app.use(express.json());
 
 const dataStore = new Map();
 
-app.use(cors({
-  origin: '*', // Permitir cualquier origen
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
-
-app.post('/api/store-sum', (req, res) => {
-  const { sum } = req.body;
+export async function post({ request }) {
+  const body = await request.json();
   const id = uuidv4();
-  dataStore.set(id, sum);
-  res.json({ id });
-});
+  dataStore.set(id, body.sum);
 
-app.options('/api/store-sum', (req, res) => {
-  res.set({
-    'Access-Control-Allow-Origin': '*', // Permitir cualquier origen
-    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
-  }).send();
-});
+  return new Response(JSON.stringify({ id: id }), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*', // Permitir cualquier origen
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  });
+}
 
-app.get('/api/getstore', (req, res) => {
-  res.json([...dataStore]);
-});
+export async function options() {
+  return new Response(null, {
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Permitir cualquier origen
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type'
+    }
+  });
+}
 
-app.listen(3000, () => {
-  console.log('Servidor escuchando en el puerto 3000');
-});
-
-export default dataStore;
+export function getStore() {
+  return dataStore;
+}
