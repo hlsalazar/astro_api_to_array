@@ -1,7 +1,10 @@
 ---
 import Perros from '../components/Perros.jsx';
 
-const title = "Receta"
+const { searchParams } = Astro.url;
+const sum = searchParams.get('sum');
+
+const title = "Receta de Tacos de Pollo";
 const ingredients = [
   "500g de pechuga de pollo",
   "1 cebolla",
@@ -82,6 +85,7 @@ const steps = [
         {steps.map(step => <li>{step}</li>)}
       </ol>
     </div>
+    {sum && <p>Resultado de la suma: {sum}</p>}
   </div>
   <Perros />
 </body>
