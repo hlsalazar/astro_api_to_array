@@ -1,10 +1,22 @@
 ---
-import { getStore } from '../pages/api/store-sum';
+import { useEffect, useState } from 'react';
 
 const params = Astro.url.searchParams;
 const id = params.get('id');
-const dataStore = getStore();
-const sum = dataStore.get(id);
+const [sum, setSum] = useState(null);
+
+useEffect(() => {
+  if (id) {
+    fetch(`/api/getstore`)
+      .then(response => response.json())
+      .then(data => {
+        const result = data.find(item => item[0] === id);
+        if (result) {
+          setSum(result[1]);
+        }
+      });
+  }
+}, [id]);
 ---
 
 <!DOCTYPE html>
@@ -15,6 +27,6 @@ const sum = dataStore.get(id);
     <title>Result Page</title>
 </head>
 <body>
-    <h1>Sum Result: {sum}</h1>
+    <h1>Sum Result: {sum !== null ? sum : 'Loading...'}</h1>
 </body>
 </html>
