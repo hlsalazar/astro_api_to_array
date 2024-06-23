@@ -1,5 +1,10 @@
 ---
-import SumResult from '../components/DataFetcher';
+import React from 'react';
+import { render } from 'react-dom';
+import SumResult from '../components/DataFetcher.jsx';
+
+const params = new URLSearchParams(Astro.url.search);
+const sum = params.get('sum');
 ---
 
 <!DOCTYPE html>
@@ -7,9 +12,21 @@ import SumResult from '../components/DataFetcher';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result Page</title>
+    <title>Sum Result</title>
 </head>
 <body>
-    <SumResult />
+    <div id="root"></div>
+
+    <script type="module">
+      import React from 'react';
+      import { render } from 'react-dom';
+      import SumResult from '../components/SumResult.jsx';
+
+      const params = new URLSearchParams(window.location.search);
+      const sum = params.get('sum');
+
+      const rootElement = document.getElementById('root');
+      render(<SumResult sum={sum} />, rootElement);
+    </script>
 </body>
 </html>
