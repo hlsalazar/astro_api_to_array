@@ -4,7 +4,8 @@ import Perros from '../components/Perros.jsx';
 const { searchParams } = Astro.url;
 const sum = searchParams.get('sum');
 
-
+// Mostrar el valor de sum en la consola
+console.log('Resultado de la suma:', sum);
 ---
 
 <!DOCTYPE html>
@@ -54,9 +55,7 @@ const sum = searchParams.get('sum');
 <body>
   <div class="container">
     <h2>Ingredientes</h2>
-
-    <p>Resultado de la suma: {sum}</p>
-    {sum && <p>Resultado de la suma: {sum}</p>}
+    {<p>Resultado de la suma: {sum}</p>}
   </div>
   <Perros />
 </body>
