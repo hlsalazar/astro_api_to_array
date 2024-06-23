@@ -1,33 +1,88 @@
 ---
-import React from 'react';
-import { render } from 'react-dom';
-import SumResult from '../components/DataFetcher.jsx';
+import Perros from '../components/Perros.jsx';
 
-const params = new URLSearchParams(Astro.url.search);
-const sum = params.get('sum');
+const title = "Receta"
+const ingredients = [
+  "500g de pechuga de pollo",
+  "1 cebolla",
+  "2 dientes de ajo",
+  "1 pimiento rojo",
+  "2 tomates",
+  "Tortillas de maíz",
+  "Sal y pimienta al gusto",
+  "Aceite de oliva"
+];
+
+const steps = [
+  "Cortar el pollo en tiras finas.",
+  "Picar la cebolla, el ajo y el pimiento rojo.",
+  "En una sartén, calentar un poco de aceite de oliva y añadir la cebolla y el ajo.",
+  "Cuando la cebolla esté transparente, añadir el pimiento rojo y cocinar por unos minutos.",
+  "Agregar el pollo y cocinar hasta que esté dorado.",
+  "Añadir los tomates picados, sal y pimienta al gusto, y cocinar por 10 minutos más.",
+  "Calentar las tortillas en otra sartén.",
+  "Servir el pollo sobre las tortillas y disfrutar."
+];
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sum Result</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    ul li {
+      margin-bottom: 5px;
+    }
+    .steps {
+      margin-top: 20px;
+    }
+    .steps ol li {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div id="root"></div>
-
-    <script type="module">
-      import React from 'react';
-      import { render } from 'react-dom';
-      import SumResult from '../components/SumResult.jsx';
-
-      const params = new URLSearchParams(window.location.search);
-      const sum = params.get('sum');
-
-      const rootElement = document.getElementById('root');
-      render(<SumResult sum={sum} />, rootElement);
-      <SumResult />
-    </script>
+  <div class="container">
+    <h1>{title}</h1>
+    <h2>Ingredientes</h2>
+    <ul>
+      {ingredients.map(ingredient => <li>{ingredient}</li>)}
+    </ul>
+    <div class="steps">
+      <h2>Pasos a seguir</h2>
+      <ol>
+        {steps.map(step => <li>{step}</li>)}
+      </ol>
+    </div>
+  </div>
+  <Perros />
 </body>
 </html>
