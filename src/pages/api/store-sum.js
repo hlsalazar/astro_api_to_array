@@ -1,16 +1,32 @@
+import { v4 as uuidv4 } from 'uuid';
+
+const dataStore = new Map();
+
 export async function post({ request }) {
-    const { sum } = await request.json();
-    const headers = new Headers();
-    headers.set('Access-Control-Allow-Origin', '*'); // Permitir todos los orígenes. Puedes restringirlo a un origen específico si prefieres.
-    headers.set('Content-Type', 'application/json');
-    return new Response(JSON.stringify({ sum }), { status: 200, headers });
-  }
-  
-  export async function options() {
-    const headers = new Headers();
-    headers.set('Access-Control-Allow-Origin', '*'); // Permitir todos los orígenes. Puedes restringirlo a un origen específico si prefieres.
-    headers.set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-    headers.set('Access-Control-Allow-Headers', 'Content-Type');
-    return new Response(null, { status: 204, headers });
-  }
-  
+    if (request.method === 'OPTIONS') {
+        return new Response(null, {
+            headers: {
+                'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app', // Tu origen permitido
+                'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            }
+        });
+    }
+
+    const body = await request.json();
+    const id = uuidv4();
+    dataStore.set(id, body.sum);
+
+    return new Response(JSON.stringify({ id: id }), {
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://api-seguim-ocular.vercel.app', // Tu origen permitido
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type'
+        }
+    });
+}
+
+export function getStore() {
+    return dataStore;
+}

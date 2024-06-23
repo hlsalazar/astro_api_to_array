@@ -1,17 +1,20 @@
 ---
-import { useState, useEffect } from 'react';
-import React from 'react';
-import DataFetcher from '../components/DataFetcher';
+import { getStore } from '../pages/api/store-sum';
 
-const urlParams = new URLSearchParams(globalThis.location.search);
-const id = urlParams.get('id');
+const params = Astro.url.searchParams;
+const id = params.get('id');
+const dataStore = getStore();
+const sum = dataStore.get(id);
 ---
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Página Astro</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Page</title>
 </head>
 <body>
-  <DataFetcher id={id} />
+    <h1>Sum Result: {sum}</h1>
 </body>
 </html>
