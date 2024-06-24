@@ -9,6 +9,9 @@ export async function post({ request }) {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Permitir solicitudes desde cualquier origen
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE', // Métodos permitidos
+        'Access-Control-Allow-Headers': 'Content-Type' // Encabezados permitidos
       },
     };
   } catch (error) {
@@ -17,7 +20,21 @@ export async function post({ request }) {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // Permitir solicitudes desde cualquier origen
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE', // Métodos permitidos
+        'Access-Control-Allow-Headers': 'Content-Type' // Encabezados permitidos
       },
     };
   }
+}
+
+export async function options() {
+  return {
+    status: 204, // No Content
+    headers: {
+      'Access-Control-Allow-Origin': '*', // Permitir solicitudes desde cualquier origen
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE', // Métodos permitidos
+      'Access-Control-Allow-Headers': 'Content-Type' // Encabezados permitidos
+    },
+  };
 }
