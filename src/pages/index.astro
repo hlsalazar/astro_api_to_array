@@ -1,62 +1,15 @@
 ---
-import Perros from '../components/Perros.jsx';
-
-const { searchParams } = Astro.url;
-const sum = searchParams.get('sum');
-
-// Mostrar el valor de sum en la consola
-console.log('Resultado de la suma:', sum);
+const url = new URL(Astro.request.url);
+const sum = url.searchParams.get('sum') || 0; // Valor por defecto 0 si el parámetro no existe
 ---
-
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{"TEXTO NADA MAS"}</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f8f8;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-    }
-    .container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    h1 {
-      color: #333;
-    }
-    ul {
-      padding-left: 20px;
-    }
-    ul li {
-      margin-bottom: 5px;
-    }
-    .steps {
-      margin-top: 20px;
-    }
-    .steps ol li {
-      margin-bottom: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro App</title>
 </head>
 <body>
-  <div class="container">
-    <h2>Ingredientes</h2>
-    {<p>Resultado de la suma: {sum}</p>}
-  </div>
-  <Perros />
+    <h1>Sum: {sum}</h1>
 </body>
 </html>
