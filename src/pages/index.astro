@@ -1,11 +1,8 @@
 ---
-const sum = Astro.url.searchParams.get('sum') || '';
+const gazeevents = Astro.url.searchParams.get('gazeevents') || '';
+const decodedData = gazeevents ? decodeURIComponent(gazeevents) : '';
 ---
 
-{sum ? <p>you searched for: {sum}</p> : null}
-
-
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +11,7 @@ const sum = Astro.url.searchParams.get('sum') || '';
     <title>Astro App</title>
 </head>
 <body>
-    <h1>Sum: {sum}</h1>
-    {sum ? <p>you searched for: {sum}</p> : null}
+    <h1>Gaze Events Data:</h1>
+    {decodedData ? <pre>{decodedData}</pre> : <p>No data received</p>}
 </body>
 </html>
