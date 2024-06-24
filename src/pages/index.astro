@@ -1,6 +1,10 @@
 ---
-const url = new URL(Astro.request.url);
-const sum = url.searchParams.get('sum') || 0; // Valor por defecto 0 si el parámetro no existe
+const sum = Astro.url.searchParams.get('sum') || '';
+---
+
+{sum ? <p>you searched for: {sum}</p> : null}
+
+
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -11,5 +15,6 @@ const sum = url.searchParams.get('sum') || 0; // Valor por defecto 0 si el pará
 </head>
 <body>
     <h1>Sum: {sum}</h1>
+    {sum ? <p>you searched for: {sum}</p> : null}
 </body>
 </html>
