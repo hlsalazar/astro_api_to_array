@@ -1,6 +1,19 @@
 ---
 const gazeevents = Astro.url.searchParams.get('gazeevents') || '';
-const decodedData = gazeevents ? decodeURIComponent(gazeevents) : '';
+let decodedData = '';
+
+if (gazeevents) {
+  console.log('Gaze Events Data (Encoded):', gazeevents);
+  try {
+    decodedData = decodeURIComponent(gazeevents);
+    console.log('Gaze Events Data (Decoded):', decodedData);
+  } catch (error) {
+    console.error('Error decoding data:', error);
+    decodedData = 'Error decoding data';
+  }
+} else {
+  console.log('No gaze events data received');
+}
 ---
 
 <!DOCTYPE html>
