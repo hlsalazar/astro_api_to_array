@@ -1,15 +1,7 @@
 ---
-const gazeevents = Astro.url.searchParams.get('gazeevents') || '';
-let decodedData = '';
-
-if (gazeevents) {
-  try {
-    decodedData = JSON.parse(decodeURIComponent(gazeevents));
-  } catch (error) {
-    console.error('Error decoding data:', error);
-    decodedData = 'Error decoding data';
-  }
-}
+const response = await fetch('https://astro-api-to-array.vercel.app/api/gazeevents');
+const data = await response.json();
+const gazeevents = data.data ? JSON.parse(decodeURIComponent(data.data)) : [];
 ---
 
 <!DOCTYPE html>
@@ -21,8 +13,8 @@ if (gazeevents) {
 </head>
 <body>
     <h1>Gaze Events Data:</h1>
-    {decodedData ? (
-      <pre>{JSON.stringify(decodedData, null, 2)}</pre>
+    {gazeevents.length > 0 ? (
+      <pre>{JSON.stringify(gazeevents, null, 2)}</pre>
     ) : (
       <p>No data received</p>
     )}
