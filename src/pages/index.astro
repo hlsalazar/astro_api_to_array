@@ -1,13 +1,33 @@
 ---
-import ApiData from '../components/ApiData.jsx';
+const fetchData = async () => {
+  try {
+    const response = await fetch('https://api-seguim-ocular.vercel.app/api/data');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await response.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      return { error: error.message };
+    } else {
+      return { error: 'An unknown error occurred' };
+    }
+  }
+};
+
+const data = await fetchData();
 ---
 
-<html lang="en">
+<html>
   <head>
-    <title>Astro with React</title>
+    <title>Fetch Data Example</title>
   </head>
   <body>
-    <h1>Welcome to Astro with React</h1>
-    <ApiData />
+    <h1>Fetched Data</h1>
+    {data.error ? (
+      <p>Error: {data.error}</p>
+    ) : (
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    )}
   </body>
 </html>
