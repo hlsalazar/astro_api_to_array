@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
+const fetchData = async () => {
+    const response = await fetch('https://https://api-seguim-ocular.vercel.app/data');
+    const data = await response.json();
+    return data;
+};
+
 const Characters: React.FC = () => {
-    const [characters, setCharacters] = useState<string[]>([]);
+    const [characters, setCharacters] = useState<{ name: string; surname: string; }[]>([]);
 
     useEffect(() => {
-        const storedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
-        setCharacters(storedCharacters);
+        fetchData().then(data => setCharacters(data));
     }, []);
 
     return (
         <div>
-            <h2>Personajes:</h2>
+            <h2>Datos Guardados:</h2>
             {characters.length > 0 ? (
                 characters.map((character, index) => (
-                    <p key={index}>{character}</p>
+                    <p key={index}>{`Nombre: ${character.name}, Apellido: ${character.surname}`}</p>
                 ))
             ) : (
-                <p>No characters found.</p>
+                <p>No hay datos guardados.</p>
             )}
         </div>
     );
