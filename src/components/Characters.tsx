@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const fetchData = async () => {
-    const response = await fetch('https://https://api-seguim-ocular.vercel.app/data');
+    const response = await fetch('/api/data');
     const data = await response.json();
     return data;
 };
