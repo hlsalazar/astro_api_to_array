@@ -1,0 +1,22 @@
+---
+const response = await fetch('https://astro-api-to-array.vercel.app/api/gazeevents');
+const data = await response.json();
+const gazeevents = data.data ? JSON.parse(decodeURIComponent(data.data)) : [];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro App</title>
+</head>
+<body>
+    <h1>Gaze Events Data:</h1>
+    {gazeevents.length > 0 ? (
+      <pre>{JSON.stringify(gazeevents, null, 2)}</pre>
+    ) : (
+      <p>No data received</p>
+    )}
+</body>
+</html>
